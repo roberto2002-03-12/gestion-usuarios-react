@@ -64,14 +64,6 @@ export const RegisterPage = () => {
     const handleMouseDownPassword = (event) => { event.preventDefault(); }
     const handleMouseDownPasswordConfirm = (event) => { event.preventDefault(); }
 
-    //useState para foto
-    const [ selectedFile, setSelectedFile ] = useState(null);
-    const handleImageChange = (event) => { 
-        setSelectedFile(event.target.files[0])
-        //lo más probable es que no funcione
-        formState.foto = selectedFile
-    }
-
     /*useForm para formulario*/
     const {
         nombre,
@@ -86,7 +78,6 @@ export const RegisterPage = () => {
         email,
         password,
         passwordConfirm,
-        foto,
         codigo,
         onInputChange: onInputRegisterChange,
         
@@ -108,6 +99,13 @@ export const RegisterPage = () => {
         onResetForm
     } = useForm(registerFormField, registerFormValidations);
 
+    //useState para foto
+    const [ selectedFile, setSelectedFile ] = useState([]);
+
+    const handleImageChange = (event) => {
+        setSelectedFile(event.target.files[0]);
+    }
+
     //saber el estado si se subio el formulario o no
     const [formSubmited, setFormSubmited] = useState(false);
 
@@ -123,8 +121,8 @@ export const RegisterPage = () => {
         setFormSubmited(true);
 
         if (!isFormValid) return;
-
-        startRegister(formState);
+        
+        startRegister(formState, selectedFile);
     };
 
     return (

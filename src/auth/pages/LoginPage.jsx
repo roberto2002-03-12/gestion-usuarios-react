@@ -1,14 +1,14 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from '../../hooks/general'
 //ToDo hook de useAuthStore
 import { Link } from "react-router-dom";
 //estilos
-import Swal from "sweetalert2";
-import { NavBar } from '../components/NavBar';
+import { NavBar, LoginPageModalHeader } from '../components';
 import LogoLogin from '../../assets/auth/account_circle.svg';
 import '../styles/LoginPage.css';
 import { TextField } from "@mui/material";
-import { getEnvVariables } from '../../helpers';
+import { useAuthStore } from "../../hooks/apis";
+import Swal from "sweetalert2";
 
 const loginFormFields = {
   email: '',
@@ -18,10 +18,46 @@ const loginFormFields = {
 const loginFormFieldsValidators = {
   email: [(value) => value.includes('@'), 'El campo email es obligatorio'],
   password: [(value) => value.length >= 8, 'El campo contraseña es obligatorio']
-}
+};
 
 export const LoginPage = () => {
-  console.log(getEnvVariables());
+  const { startLogin, errorMessage, registerMessage } = useAuthStore();
+
+  const {
+    email,
+    password,
+    onInputChange: onInputLoginChange,
+
+    emailValid,
+    passwordValid,
+
+    formState,
+    isFormValid
+  } = useForm(loginFormFields, loginFormFieldsValidators);
+
+  const [formSubmited, setFormSubmited] = useState(false);
+
+  const onSubmitLogin = (event) => {
+    event.preventDefault();
+
+    setFormSubmited(true);
+
+    if (!isFormValid) return;
+
+    startLogin(formState);
+  };
+
+  useEffect(() => {
+    if (errorMessage !== undefined) {
+      Swal.fire('Error en autenticación', errorMessage, 'error');
+    }
+  }, [errorMessage]);
+  
+  useEffect(() => {
+    if (registerMessage !== undefined) {
+      Swal.fire('Se logro registrar, espere al admin que le asigne un rol', registerMessage, 'success')
+    }
+  }, [registerMessage]);
 
   return (
     <>
@@ -29,35 +65,38 @@ export const LoginPage = () => {
       
       <main className="main-login">
         <section className="modal-login">
-            <div className="modal-login-img">
-                <img src={ LogoLogin } alt="" />
-            </div>
-            <h5 className="modal-login-title">Login</h5>
-            <p className="modal-login-text">Usuario gestión</p>
+          <LoginPageModalHeader/>
+          <form onSubmit={ onSubmitLogin }>
             <div className="modal-login-input">
-                <div className="modal-login-input-email">
-                  <TextField
-                    required
-                    id="standard-required"
-                    label="Email"
-                    defaultValue="example@gmail.com"
-                    variant="filled"
-                    size="small"
-                    sx={{
-                      width: 280,
-                    }}
+              <div className="modal-login-input-email">
+                <TextField
+                  required
+                  label="Email"
+                  variant="filled"
+                  size="small"
+                  name="email"
+                  value={ email }
+                  onChange={ onInputLoginChange }
+                  error={ !!emailValid && formSubmited }
+                  helperText={ !!emailValid && formSubmited ? emailValid : '' }
+                  sx={{
+                    width: 280,
+                  }}
                   />
                 </div>
 
                 <div className="modal-login-input-password">
                   <TextField
                     required
-                    id="standard-password-input"
                     label="Contraseña"
                     type="password"
-                    autoComplete="current-password"
                     variant="filled"
                     size="small"
+                    name="password"
+                    value={ password }
+                    onChange={ onInputLoginChange }
+                    error={ !!passwordValid && formSubmited }
+                    helperText={ !!passwordValid && formSubmited ? passwordValid : '' }
                     sx={{
                       width: 280
                     }}
@@ -66,14 +105,19 @@ export const LoginPage = () => {
             </div>
 
             <div className="modal-login-buttons">
-                {/*ToDo onClick iniciar sesión*/}
-                <button className="modal-login-option-login">Iniciar sesión</button>
-                <Link to={'/auth/register'} className="modal-login-gopageregister">
-                  Registrarse
-                </Link>
+              <button 
+                className="modal-login-option-login"
+                type="submit"
+              >
+                Iniciar sesión
+              </button>
+              <Link to={'/register'} className="modal-login-gopageregister">
+                Registrarse
+              </Link>
             </div>
+          </form>
         </section>
-    </main>
+      </main>
     </>
   )
 };

@@ -1,0 +1,107 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.navbar img {
+    width: 40px;
+    height: 40px;
+}
+
+.navbar a {
+    font-size: 16px;
+}
+
+.navbar-brand-box {
+    width: 207px;
+}
+
+.nav-link img {
+    width: 16px;
+    height: 16px;
+}
+
+main {
+    margin-top: 40px;
+}
+
+.list-users-filter {
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 950px;
+    height: 60px;
+    border: 3px solid black;
+    border-radius: 12px;
+}
+
+.list-users-filter h5 {
+    font-size: 16px;
+}
+
+.list-users-form {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 665px;
+}
+
+.list-users-search-box {
+    width: 170px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.list-users-options {
+    width: 110px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.list-users {
+    width: 900px;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+.list-users-option-date {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.list-users-option-date-button {
+    border: none;
+    background: none;
+    margin-bottom: 12px;
+}
+
+.table tr th {
+    font-size: 14px;
+}
+
+.table tr td {
+    font-size: 14px;
+}
+
+.table-users-options {
+    text-decoration: none;
+}
+
+.table-users-options img {
+    width: 18px;
+    height: 18px;
+}
+
+.list-users-filter-button {
+    width: 70px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

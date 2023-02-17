@@ -1,7 +1,16 @@
-import React from 'react'
+import { SearchBoxUsers, SortByDateUsers, TableListUsers } from './components';
+import '../../styles/style-lista-usuarios.css';
 
 export const ListUsers = () => {
   return (
-    <div>ListUsers</div>
-  )
+    <main>
+      <SearchBoxUsers />
+
+      <section className="list-users">
+        <SortByDateUsers />
+        <hr />
+        <TableListUsers />
+      </section>
+    </main>
+  );
 }

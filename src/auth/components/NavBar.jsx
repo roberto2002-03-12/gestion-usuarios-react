@@ -1,8 +1,8 @@
-import React from 'react'
+import { memo } from 'react'
 import UcvLogo from '../../assets/app/ucv-logo.png';
 import '../styles/NavBar.css';
 
-export const NavBar = () => {
+export const NavBar = memo(() => {
   return (
     <>
       <nav className="navbar bg-body-tertiary" id="navbar-start-ucv-cid">
@@ -15,4 +15,4 @@ export const NavBar = () => {
       </nav>
     </>
   )
-}
+});
